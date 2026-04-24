@@ -6,22 +6,22 @@ export class Movie {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({ length: 255 })
+    @Column("varchar", { length: 255 })
     title: string
 
-    @Column({ length: 1000, nullable: true })
+    @Column("varchar", { length: 1000, nullable: true })
     description: string
 
-    @Column()
+    @Column("int")
     durationMin: number
 
-    @Column({ length: 255, nullable: true })
+    @Column("varchar", { length: 255, nullable: true })
     director: string
 
-    @Column({ length: 100, nullable: true })
+    @Column("varchar", { length: 100, nullable: true })
     genre: string
 
-    @Column({ nullable: true })
+    @Column("int", { nullable: true })
     releaseYear: number
 
     @CreateDateColumn()
