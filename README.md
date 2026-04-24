@@ -66,17 +66,19 @@ src/
 - [x] Configuration TypeScript + TypeORM
 - [x] Docker (API + PostgreSQL)
 - [x] Entités : User, Token, Room, Movie, Screening
-- [x] Auth usecase : register, login, logout, logout-all, refresh token
+- [x] Authentification complète : register, login, logout, logout-all, refresh token
+- [x] Middleware JWT + contrôle des rôles (CLIENT, ADMIN, SUPER_ADMIN)
+- [x] Gestion des utilisateurs : profil, modification, liste admin, changement de rôle, suppression
+- [x] Collection Postman pour tester l'API
 
 ## Ce qui reste à faire
 
-- [ ] Handler auth + middleware JWT + routes
-- [ ] CRUD Rooms
-- [ ] CRUD Movies
-- [ ] CRUD Screenings (avec règles métier : horaires, chevauchements)
-- [ ] Entités + CRUD Tickets (Regular + Super)
-- [ ] Entités + CRUD Wallet + Transactions
-- [ ] Statistiques (admin)
+- [ ] CRUD Rooms (feat/rooms — collègue 1)
+- [ ] CRUD Movies (feat/rooms — collègue 1)
+- [ ] CRUD Screenings avec règles métier : horaires, chevauchements (feat/rooms — collègue 1)
+- [ ] Entités + CRUD Tickets Regular + Super (feat/tickets — collègue 2)
+- [ ] Entités + CRUD Wallet + Transactions (feat/tickets — collègue 2)
+- [ ] Statistiques admin : fréquentation, occupation, revenus
 - [ ] Documentation Swagger
 - [ ] Docker prod + Nginx
 
