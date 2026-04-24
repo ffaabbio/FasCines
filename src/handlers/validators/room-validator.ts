@@ -1,5 +1,5 @@
 import Joi from "joi"
-import { CreateRoomRequest, ListRoomRequest, UpdateRoomRequest } from "../requests/room-request.js"
+import { CreateRoomRequest, ListRoomRequest, RoomIdRequest, UpdateRoomRequest } from "../requests/room-request.js"
 
 export const CreateRoomValidator = Joi.object<CreateRoomRequest>({
     name: Joi.string().min(2).max(100).required(),
@@ -20,4 +20,8 @@ export const UpdateRoomValidator = Joi.object<UpdateRoomRequest>({
 export const ListRoomValidator = Joi.object<ListRoomRequest>({
     capacity: Joi.number().min(10).required(),
     current: Joi.number().required()
+})
+
+export const RoomIdValidator = Joi.object<RoomIdRequest>({
+    id: Joi.number().min(1).optional()
 })

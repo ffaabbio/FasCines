@@ -8,11 +8,12 @@ export interface CreateRoomRequest {
 }
 
 export interface UpdateRoomRequest{
-    name: string,
-    description: string,
-    capacity: number,
-    isHandicapReady: boolean,
-    isUnderMaintenance: boolean
+    id:number,
+    name?: string,
+    description?: string,
+    capacity?: number,
+    isHandicapReady?: boolean,
+    isUnderMaintenance?: boolean
 }
 
 export interface UnderMaintenanceRoomRequest{
@@ -22,4 +23,8 @@ export interface UnderMaintenanceRoomRequest{
 export interface ListRoomRequest {
     capacity: number,
     current: number
+}
+
+export interface RoomIdRequest {
+    id: number
 }

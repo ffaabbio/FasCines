@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { CreateRoomValidator } from "./validators/room-validator.js"
+import { CreateRoomValidator, RoomIdValidator } from "./validators/room-validator.js"
 import { generateValidationErrorMessage } from "./validators/utils.js"
 import { RoomUseCase } from "../usecases/room-usecase.js";
 import { AppDataSource } from "../database/database.js";
@@ -7,12 +7,13 @@ import { Room } from "../database/entities/room.js";
 import { ResourceConflictError } from "../usecases/error.js";
 
 const CreateRoom = async (req: Request, res:Response) => {
-    const validation = CreateRoomValidator.validate(req.body);
+    const validation = CreateRoomValidator.validate(req.body)
+    
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
     }
 
-    const createRoomRequest = validation.value;
+    const createRoomRequest = validation.value
 
     const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room))
     
@@ -30,4 +31,79 @@ const CreateRoom = async (req: Request, res:Response) => {
             error: "Internal Server Error"
         })
     }
+}
+
+
+const GetRoom = async (req: Request, res:Response) => {
+    const validation = CreateRoomValidator.validate(req.body)
+    
+    if(validation.error){
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+
+    const roomIdRequest = validation.value
+    const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room))
+
+    const room = await roomUseCase.getRoom(roomIdRequest.id)
+    if(room === null){
+        return res.status(404).send({
+            error: "room not found"
+        })
+    }
+}
+
+
+const UpdateRoom = async (req: Request, res:Response) => {
+    const validation = CreateRoomValidator.validate(req.body)
+
+    if(validation.error){
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+
+    const updateRoomRequest = validation.value
+
+    const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room))
+
+    try {
+        const roomUdpated = await roomUseCase.updateRoom(
+            updateRoomRequest.id,
+            updateRoomRequest.name,
+            updateRoomRequest.description,
+            updateRoomRequest.capacity,
+            updateRoomRequest.isHandicapReady,
+            updateRoomRequest.isUnderMaintenance
+        )
+        if( roomUdpated === null){
+            return res.status(404).send({
+                error: "room not found"
+            })
+        }
+        return res.send(roomUdpated)
+    } catch(error){
+        if(error instanceof ResourceConflictError){
+            return res.status(409).send({
+                name: "name is already taken"
+            })
+        }
+        throw error
+    }
+}
+
+export const DeleteProduct = async (req: Request, res: Response) => {
+    const validation = RoomIdValidator.validate(req.params)
+    if (validation.error) {
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+    const roomIdRequest = validation.value
+
+    const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room));
+
+    const roomDeleted = await roomUseCase.deleteRoom(roomIdRequest.id);
+    if (roomDeleted === null) {
+        return res.status(404).send({
+            error: "room not found"
+        })
+    }
+    return res.send(roomDeleted);
+
 }
