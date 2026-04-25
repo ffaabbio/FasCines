@@ -3,7 +3,7 @@ import { CreateRoomRequest, ListRoomRequest, RoomIdRequest, UpdateRoomRequest } 
 
 export const CreateRoomValidator = Joi.object<CreateRoomRequest>({
     name: Joi.string().min(2).max(100).required(),
-    description: Joi.string().min(10).max(1000).required(),
+    description: Joi.string().min(10).max(500).required(),
     capacity: Joi.number().min(15).max(30).required(),
     isHandicapReady: Joi.boolean().required(),
     isUnderMaintenance: Joi.boolean().required()
