@@ -1,6 +1,13 @@
 import {Repository} from "typeorm"
 import { Room } from "../database/entities/room.js";
-import { InvalidCredentialsError, NotFoundError, ResourceConflictError } from "./error.js"
+import { NotFoundError, ResourceConflictError } from "./error.js"
+import { ListResponse } from "./list-response.js";
+
+
+export interface ListRoomFilter {
+    page: number,
+    size: number,
+}
 
 export class RoomUseCase {
     constructor(
@@ -66,6 +73,23 @@ export class RoomUseCase {
          if(!room) throw new NotFoundError("Room not found")
 
         await this.roomRepository.softRemove(room)
+    }
+
+    async listRooms({page,size}: ListRoomFilter): Promise<ListResponse<Room>> {
+        const query = this.roomRepository.createQueryBuilder("room")
+ 
+        query.skip((page - 1) * size)
+        query.take(size)
+
+        const [rooms, totalCount] = await query.getManyAndCount();
+        return {
+            data: rooms,
+            pageSize: size,
+            page,
+            totalCount,
+            totalPages: Math.ceil(totalCount / size)
+        }
+        
     }
 
 }

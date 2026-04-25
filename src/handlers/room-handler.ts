@@ -53,6 +53,36 @@ const GetRoom = async (req: Request, res:Response) => {
 }
 
 
+export const ListRooms = async (req: Request, res: Response) => {
+    const validation = CreateRoomValidator.validate(req.body)
+
+    if(validation.error){
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+
+    const listRoomsRequest = validation.validate
+    let size  = 10;
+    if (listRoomsRequest.size !== undefined) {
+        size = listRoomsRequest.size
+    }
+
+    let page = 1;
+    if (listRoomsRequest.page !== undefined) {
+        page = listRoomsRequest.page
+    }
+
+    const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room))
+
+    const room = await roomUseCase.listRooms({
+        page,
+        size
+    })
+
+    return res.send(room)
+
+}
+
+
 const UpdateRoom = async (req: Request, res:Response) => {
     const validation = CreateRoomValidator.validate(req.body)
 
@@ -89,7 +119,7 @@ const UpdateRoom = async (req: Request, res:Response) => {
     }
 }
 
-export const DeleteProduct = async (req: Request, res: Response) => {
+export const DeleteRoom = async (req: Request, res: Response) => {
     const validation = RoomIdValidator.validate(req.params)
     if (validation.error) {
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))

@@ -21,8 +21,9 @@ export interface UnderMaintenanceRoomRequest{
 }
 
 export interface ListRoomRequest {
+    page: number,
+    size: number
     capacity: number,
-    current: number
 }
 
 export interface RoomIdRequest {
