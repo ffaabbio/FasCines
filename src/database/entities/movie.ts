@@ -24,6 +24,9 @@ export class Movie {
     @Column({ nullable: true })
     releaseYear: number
 
+    @OneToMany("Screening", (screening: Screening) => screening.movie)
+    screenings!: Screening[]
+    
     @CreateDateColumn()
     createdAt: Date
 
@@ -33,8 +36,6 @@ export class Movie {
     @DeleteDateColumn()
     deletedAt: Date
 
-    @OneToMany("Screening", (screening: Screening) => screening.movie)
-    screenings!: Screening[]
 
     constructor(
         id: string,

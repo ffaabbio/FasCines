@@ -70,7 +70,7 @@ export class RoomUseCase {
     async deleteRoom(id: number): Promise<void> {
         const room = await this.getRoom(id)
         
-         if(!room) throw new NotFoundError("Room not found")
+        if(!room) throw new NotFoundError("Room not found")
 
         await this.roomRepository.softRemove(room)
     }
