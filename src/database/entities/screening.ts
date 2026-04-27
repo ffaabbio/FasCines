@@ -1,7 +1,6 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import type { Movie } from "./movie.js"
 import type { Room } from "./room.js"
-//import type { Ticket } from "./ticket.js"
 
 @Entity()
 export class Screening {
@@ -14,10 +13,10 @@ export class Screening {
     @ManyToOne("Room", (room: Room) => room.screenings, { onDelete: "RESTRICT" })
     room: Room
 
-    @Column()
+    @Column("timestamp")
     startsAt: Date
 
-    @Column()
+    @Column("timestamp")
     endsAt: Date
 
     @CreateDateColumn()
@@ -28,9 +27,6 @@ export class Screening {
 
     @DeleteDateColumn()
     deletedAt: Date
-
-    //@OneToMany("Ticket", (ticket: Ticket) => ticket.screening)
-    //tickets!: Ticket[]
 
     constructor(
         id: string,

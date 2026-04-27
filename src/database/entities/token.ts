@@ -6,7 +6,7 @@ export class Token {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({ length: 512 })
+    @Column("varchar", { length: 512 })
     token: string
 
     @ManyToOne("User", (user: User) => user.tokens, { onDelete: "CASCADE" })
