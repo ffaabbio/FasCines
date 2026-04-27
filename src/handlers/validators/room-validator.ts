@@ -24,5 +24,5 @@ export const ListRoomValidator = Joi.object<ListRoomRequest>({
 })
 
 export const RoomIdValidator = Joi.object<RoomIdRequest>({
-    id: Joi.number().min(1).optional()
+    id: Joi.string().min(1).optional()
 })

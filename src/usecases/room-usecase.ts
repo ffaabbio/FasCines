@@ -39,14 +39,14 @@ export class RoomUseCase {
             return await this.roomRepository.save(room)
         }
 
-    async getRoom(id: number): Promise<Room | null> {
+    async getRoom(id: string): Promise<Room | null> {
         return await this.roomRepository.findOneBy({
             id
         })
     }
     
     async updateRoom(
-        id:number,
+        id:string,
         name?: string,
         description?: string,
         capacity?: number,
@@ -67,7 +67,7 @@ export class RoomUseCase {
         return room
     }
     
-    async deleteRoom(id: number): Promise<void> {
+    async deleteRoom(id: string): Promise<void> {
         const room = await this.getRoom(id)
         
         if(!room) throw new NotFoundError("Room not found")

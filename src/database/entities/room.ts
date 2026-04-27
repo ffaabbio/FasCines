@@ -6,19 +6,19 @@ export class Room {
     @PrimaryGeneratedColumn("uuid")
     id: string
 
-    @Column({ unique: true, length: 100 })
+    @Column("varchar", { unique: true, length: 100 })
     name: string
 
-    @Column({ length: 500, nullable: true })
+    @Column("varchar", { length: 500, nullable: true })
     description: string
 
-    @Column()
+    @Column("int")
     capacity: number
 
-    @Column({ default: false })
+    @Column("boolean", { default: false })
     isHandicapReady: boolean
 
-    @Column({ default: false })
+    @Column("boolean", { default: false })
     isUnderMaintenance: boolean
 
     @CreateDateColumn()

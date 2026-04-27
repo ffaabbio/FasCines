@@ -8,7 +8,7 @@ export interface CreateRoomRequest {
 }
 
 export interface UpdateRoomRequest{
-    id:number,
+    id:string,
     name?: string,
     description?: string,
     capacity?: number,
@@ -27,5 +27,5 @@ export interface ListRoomRequest {
 }
 
 export interface RoomIdRequest {
-    id: number
+    id: string
 }

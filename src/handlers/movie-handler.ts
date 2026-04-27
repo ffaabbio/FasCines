@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { CreateMovieRequest } from "./requests/movie-request.js";
-import { CreateMovieValidator, MovieIdValidator } from "./validators/movie-validator.js";
+import { CreateMovieValidator, MovieIdValidator, UpdateMovieValidator } from "./validators/movie-validator.js";
 import { generateValidationErrorMessage } from "./validators/utils.js"
 import { MovieUseCase } from "../usecases/movie-usecase.js";
 import { AppDataSource } from "../database/database.js";
@@ -8,7 +8,7 @@ import { ResourceConflictError } from "../usecases/error.js";
 import { Movie } from "../database/entities/movie.js";
 
 
-const CreateMovie = async (req: Request, res: Response) => {
+export const CreateMovie = async (req: Request, res: Response) => {
     const validation = CreateMovieValidator.validate(req.body)
         
     if(validation.error){
@@ -35,7 +35,7 @@ const CreateMovie = async (req: Request, res: Response) => {
     }
 }
 
-const GetMovie = async (req: Request, res: Response) => {
+export const GetMovie = async (req: Request, res: Response) => {
     const validation = CreateMovieValidator.validate(req.body)
         
     if(validation.error){
@@ -55,8 +55,8 @@ const GetMovie = async (req: Request, res: Response) => {
     }
 }
 
-const UpdateMovie = async (req: Request, res: Response) => {
-   const validation = CreateMovieValidator.validate(req.body)
+export const UpdateMovie = async (req: Request, res: Response) => {
+   const validation = UpdateMovieValidator.validate(req.body)
    
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))

@@ -1,12 +1,12 @@
 import { Request, Response } from "express"
-import { CreateRoomValidator, RoomIdValidator } from "./validators/room-validator.js"
+import { CreateRoomValidator, ListRoomValidator, RoomIdValidator, UpdateRoomValidator } from "./validators/room-validator.js"
 import { generateValidationErrorMessage } from "./validators/utils.js"
 import { RoomUseCase } from "../usecases/room-usecase.js";
 import { AppDataSource } from "../database/database.js";
 import { Room } from "../database/entities/room.js";
 import { ResourceConflictError } from "../usecases/error.js";
 
-const CreateRoom = async (req: Request, res:Response) => {
+export const CreateRoom = async (req: Request, res:Response) => {
     const validation = CreateRoomValidator.validate(req.body)
     
     if(validation.error){
@@ -34,8 +34,8 @@ const CreateRoom = async (req: Request, res:Response) => {
 }
 
 
-const GetRoom = async (req: Request, res:Response) => {
-    const validation = CreateRoomValidator.validate(req.body)
+export const GetRoom = async (req: Request, res:Response) => {
+    const validation = RoomIdValidator.validate(req.params)
     
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
@@ -45,16 +45,18 @@ const GetRoom = async (req: Request, res:Response) => {
     const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room))
 
     const room = await roomUseCase.getRoom(roomIdRequest.id)
+    
     if(room === null){
         return res.status(404).send({
             error: "room not found"
         })
     }
+    return res.status(200).json(room);
 }
 
 
 export const ListRooms = async (req: Request, res: Response) => {
-    const validation = CreateRoomValidator.validate(req.body)
+    const validation = ListRoomValidator.validate(req.body)
 
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
@@ -83,8 +85,8 @@ export const ListRooms = async (req: Request, res: Response) => {
 }
 
 
-const UpdateRoom = async (req: Request, res:Response) => {
-    const validation = CreateRoomValidator.validate(req.body)
+export const UpdateRoom = async (req: Request, res:Response) => {
+    const validation = UpdateRoomValidator.validate(req.body)
 
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
