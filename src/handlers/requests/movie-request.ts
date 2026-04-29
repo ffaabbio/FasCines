@@ -17,6 +17,11 @@ export interface UpdateMovieRequest {
     releaseYear?: number
 }
 
+export interface ListMovieRequest {
+    page:number,
+    size: number
+}
+
 export interface MovieIdRequest {
-    id: number
+    id: string
 }

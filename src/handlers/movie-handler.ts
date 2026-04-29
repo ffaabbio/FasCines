@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { CreateMovieRequest } from "./requests/movie-request.js";
-import { CreateMovieValidator, MovieIdValidator, UpdateMovieValidator } from "./validators/movie-validator.js";
+import { CreateMovieValidator, MovieIdValidator, UpdateMovieValidator, ListMovieValidator } from "./validators/movie-validator.js";
 import { generateValidationErrorMessage } from "./validators/utils.js"
 import { MovieUseCase } from "../usecases/movie-usecase.js";
 import { AppDataSource } from "../database/database.js";
@@ -36,7 +36,7 @@ export const CreateMovie = async (req: Request, res: Response) => {
 }
 
 export const GetMovie = async (req: Request, res: Response) => {
-    const validation = CreateMovieValidator.validate(req.body)
+    const validation = MovieIdValidator.validate(req.params)
         
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
@@ -53,22 +53,60 @@ export const GetMovie = async (req: Request, res: Response) => {
             error: "room not found"
         })
     }
+
+    return res.status(200).json(movie)
 }
 
-export const UpdateMovie = async (req: Request, res: Response) => {
-   const validation = UpdateMovieValidator.validate(req.body)
-   
+export const ListMovies = async (req: Request, res: Response) => {
+    const validation = ListMovieValidator.validate(req.body)
+
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
     }
     
+    const listMoviesRequest = validation.value
+    let size  = 10;
+    if (listMoviesRequest.size !== undefined) {
+        size = listMoviesRequest.size
+    }
+
+    let page = 1;
+    if (listMoviesRequest.page !== undefined) {
+        page = listMoviesRequest.page
+    }
+
+    const movieUseCase = new MovieUseCase(AppDataSource.getRepository(Movie))
+
+    const movie = await movieUseCase.listMovie({
+        page,
+        size
+    })
+
+    return res.send(movie)
+
+
+}
+
+export const UpdateMovie = async (req: Request, res: Response) => {
+   const validation = UpdateMovieValidator.validate(req.body)
+   const validationId = MovieIdValidator.validate(req.params)
+   
+    if(validation.error){
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+
+    if(validationId.error){
+        return res.status(400).send(generateValidationErrorMessage(validationId.error.details))
+    }
+    
     const updateMovieRequest = validation.value
+    const movieIdRequest = validationId.value
 
     const movieUseCase = new MovieUseCase(AppDataSource.getRepository(Movie))
 
     try{
         const movieUpdated = await movieUseCase.updateMovie(
-            updateMovieRequest.id,
+            movieIdRequest.id,
             updateMovieRequest.title,
             updateMovieRequest.description,
             updateMovieRequest.durationMin,

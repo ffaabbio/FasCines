@@ -19,8 +19,7 @@ export const UpdateRoomValidator = Joi.object<UpdateRoomRequest>({
 
 export const ListRoomValidator = Joi.object<ListRoomRequest>({
     page: Joi.number().min(1).optional(),
-    size: Joi.number().min(1).optional(),
-    capacity: Joi.number().min(10).max(100).optional(),
+    size: Joi.number().min(1).optional()
 })
 
 export const RoomIdValidator = Joi.object<RoomIdRequest>({

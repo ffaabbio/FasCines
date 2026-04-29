@@ -1,5 +1,5 @@
 import Joi from "joi"
-import { CreateMovieRequest, MovieIdRequest, UpdateMovieRequest } from "../requests/movie-request.js"
+import { CreateMovieRequest, MovieIdRequest, UpdateMovieRequest, ListMovieRequest } from "../requests/movie-request.js"
 
 export const CreateMovieValidator = Joi.object<CreateMovieRequest>({
     title: Joi.string().min(2).max(255).required(),
@@ -12,7 +12,6 @@ export const CreateMovieValidator = Joi.object<CreateMovieRequest>({
 
 
 export const UpdateMovieValidator = Joi.object<UpdateMovieRequest>({
-    id:Joi.number().min(1).required(),
     title: Joi.string().min(2).max(255).optional(),
     description: Joi.string().max(1000).optional(),
     durationMin: Joi.number().min(1).optional(),
@@ -21,6 +20,11 @@ export const UpdateMovieValidator = Joi.object<UpdateMovieRequest>({
     releaseYear:Joi.number().optional(),
 })
 
+export const ListMovieValidator = Joi.object<ListMovieRequest>({
+    page: Joi.number().min(1).optional(),
+    size: Joi.number().min(1).optional()
+})
+
 export const MovieIdValidator = Joi.object<MovieIdRequest>({
-    id: Joi.number().min(1).required()
+    id: Joi.string().min(1).required()
 })

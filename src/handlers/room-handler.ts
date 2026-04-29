@@ -51,7 +51,7 @@ export const GetRoom = async (req: Request, res:Response) => {
             error: "room not found"
         })
     }
-    return res.status(200).json(room);
+    return res.status(200).json(room)
 }
 
 

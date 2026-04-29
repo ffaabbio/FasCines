@@ -4,7 +4,7 @@ import { GetMe, UpdateMe, ListUsers, GetUserById, UpdateRole, DeleteUser } from 
 import { authMiddleware, requireRole } from "./middlewares/auth-middleware.js"
 import { UserRole } from "../database/entities/user.js"
 import { ListRooms,GetRoom, CreateRoom, UpdateRoom, DeleteRoom } from "./room-handler.js"
-import { CreateMovie, DeleteMovie, GetMovie, UpdateMovie } from "./movie-handler.js"
+import { CreateMovie, DeleteMovie, GetMovie, ListMovies, UpdateMovie } from "./movie-handler.js"
 
 export const initHandlers = (app: Express) => {
     // Auth — routes publiques
@@ -37,7 +37,7 @@ export const initHandlers = (app: Express) => {
     app.delete("/api/rooms/:id",authMiddleware,requireRole(UserRole.ADMIN,UserRole.SUPER_ADMIN),DeleteRoom)
 
     //Movie - routes publiques
-    app.get("/api/movies",authMiddleware,ListRooms)
+    app.get("/api/movies",authMiddleware,ListMovies)
     app.get("/api/movies/:id",authMiddleware,GetMovie)
 
     //Movie - routes admin
