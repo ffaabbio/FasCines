@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import type { Token } from "./token.js"
+import { Ticket } from "./ticket.js"
 
 export enum UserRole {
     CLIENT = "client",
@@ -24,6 +25,9 @@ export class User {
     @Column("varchar", { length: 100 })
     lastName: string
 
+    @Column("decimal", { precision: 10, scale: 2, default: 100 })       // a retire il commence avec 100€
+    balance: number;
+
     @Column("enum", { enum: UserRole, default: UserRole.CLIENT })
     role: UserRole
 
@@ -39,12 +43,16 @@ export class User {
     @OneToMany("Token", (token: Token) => token.user)
     tokens!: Token[]
 
+    @OneToMany("Ticket", (ticket: Ticket) => ticket.user)
+    tickets!: Ticket[];
+
     constructor(
         id: string,
         email: string,
         password: string,
         firstName: string,
         lastName: string,
+        balance: number,
         role: UserRole,
         createdAt: Date,
         updatedAt: Date,
@@ -55,6 +63,7 @@ export class User {
         this.password = password
         this.firstName = firstName
         this.lastName = lastName
+        this.balance = balance
         this.role = role
         this.createdAt = createdAt
         this.updatedAt = updatedAt

@@ -2,10 +2,12 @@ import "reflect-metadata"
 import express from "express"
 import { AppDataSource } from "./database/database.js"
 import { initHandlers } from "./handlers/routes.js"
+import "dotenv/config";
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
-
+console.log("DB_USER:", process.env.DB_USER);
+console.log("DB_PASS defined:", !!process.env.DB_PASSWORD);
 app.use(express.json())
 
 initHandlers(app)
