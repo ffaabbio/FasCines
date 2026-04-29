@@ -6,7 +6,7 @@ import { AppDataSource } from "../database/database.js";
 import { Room } from "../database/entities/room.js";
 import { ResourceConflictError } from "../usecases/error.js";
 
-const CreateRoom = async (req: Request, res:Response) => {
+export const CreateRoom = async (req: Request, res:Response) => {
     const validation = CreateRoomValidator.validate(req.body)
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
