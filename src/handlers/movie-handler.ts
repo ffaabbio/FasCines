@@ -1,5 +1,4 @@
 import { Request, Response } from "express"
-import { CreateMovieRequest } from "./requests/movie-request.js";
 import { CreateMovieValidator, MovieIdValidator, UpdateMovieValidator, ListMovieValidator } from "./validators/movie-validator.js";
 import { generateValidationErrorMessage } from "./validators/utils.js"
 import { MovieUseCase } from "../usecases/movie-usecase.js";
