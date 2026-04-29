@@ -41,14 +41,14 @@ export class MovieUseCase{
         return await this.movieRepository.save(movie)
     }
     
-    async getMovie(id: number):Promise<Movie | null> {
+    async getMovie(id: string):Promise<Movie | null> {
         return await this.movieRepository.findOneBy({
             id
         })
     }
 
     async updateMovie(  
-        id:number,
+        id:string,
         title?: string,
         description?: string,
         durationMin?: number,
@@ -68,10 +68,10 @@ export class MovieUseCase{
         if(releaseYear !== undefined) movie.releaseYear = releaseYear
 
         if(!movie) throw new NotFoundError("Movie not found")
-        return movie
+        return await this.movieRepository.save(movie)
     }
 
-    async deleteMovie(id: number): Promise<void> {
+    async deleteMovie(id: string): Promise<void> {
         const movie = await this.getMovie(id)
 
         if(!movie) throw new NotFoundError("Movie nof found")

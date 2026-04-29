@@ -62,7 +62,7 @@ export const ListRooms = async (req: Request, res: Response) => {
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
     }
 
-    const listRoomsRequest = validation.validate
+    const listRoomsRequest = validation.value
     let size  = 10;
     if (listRoomsRequest.size !== undefined) {
         size = listRoomsRequest.size
@@ -86,6 +86,12 @@ export const ListRooms = async (req: Request, res: Response) => {
 
 
 export const UpdateRoom = async (req: Request, res:Response) => {
+    const validationId = RoomIdValidator.validate(req.params)
+    
+    if (validationId.error) {
+        return res.status(400).send(generateValidationErrorMessage(validationId.error.details))
+    }
+
     const validation = UpdateRoomValidator.validate(req.body)
 
     if(validation.error){
@@ -93,12 +99,13 @@ export const UpdateRoom = async (req: Request, res:Response) => {
     }
 
     const updateRoomRequest = validation.value
+    const updateRoomidRequet = validation.value
 
     const roomUseCase = new RoomUseCase(AppDataSource.getRepository(Room))
 
     try {
         const roomUdpated = await roomUseCase.updateRoom(
-            updateRoomRequest.id,
+            updateRoomidRequet.id,
             updateRoomRequest.name,
             updateRoomRequest.description,
             updateRoomRequest.capacity,

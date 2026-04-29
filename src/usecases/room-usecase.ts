@@ -64,7 +64,7 @@ export class RoomUseCase {
         if(isUnderMaintenance !== undefined) room.isUnderMaintenance = isUnderMaintenance
         
         if(!room) throw new NotFoundError("Room not found")
-        return room
+        return await this.roomRepository.save(room)
     }
     
     async deleteRoom(id: string): Promise<void> {
