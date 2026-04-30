@@ -87,16 +87,18 @@ export const ListMovies = async (req: Request, res: Response) => {
 }
 
 export const UpdateMovie = async (req: Request, res: Response) => {
-   const validation = UpdateMovieValidator.validate(req.body)
-   const validationId = MovieIdValidator.validate(req.params)
-   
-    if(validation.error){
-        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
-    }
-
+    const validationId = MovieIdValidator.validate(req.params)
+    
     if(validationId.error){
         return res.status(400).send(generateValidationErrorMessage(validationId.error.details))
     }
+    
+    const validation = UpdateMovieValidator.validate(req.body)
+    
+    if(validation.error){
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+    }
+    
     
     const updateMovieRequest = validation.value
     const movieIdRequest = validationId.value
