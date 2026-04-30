@@ -8,7 +8,6 @@ export interface CreateMovieRequest {
 }
 
 export interface UpdateMovieRequest {
-    id:number,
     title?: string,
     description?: string,
     durationMin?: number,
@@ -18,8 +17,8 @@ export interface UpdateMovieRequest {
 }
 
 export interface ListMovieRequest {
-    page:number,
-    size: number
+    page?:number,
+    size?: number
 }
 
 export interface MovieIdRequest {
