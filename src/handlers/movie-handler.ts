@@ -11,7 +11,7 @@ export const CreateMovie = async (req: Request, res: Response) => {
     const validation = CreateMovieValidator.validate(req.body)
         
     if(validation.error){
-            return res.status(400).send(generateValidationErrorMessage(validation.error.details))
+        return res.status(400).send(generateValidationErrorMessage(validation.error.details))
     }
 
     const createMovieRequest = validation.value
