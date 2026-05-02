@@ -1,4 +1,4 @@
-import {Repository} from "typeorm"
+import {Repository,LessThan,MoreThan} from "typeorm"
 import { Screening } from "../database/entities/screening.js";
 import { Movie } from "../database/entities/movie.js";
 import { NotFoundError, ResourceConflictError } from "./error.js"
@@ -23,18 +23,32 @@ export class ScreeningUseCase{
         roomId: string,
         startsAt: string, 
         endsAt: string
-    ):Promise<Screening>{
-        const existingScreening = await this.screeningRepository.findOneBy({movieId,roomId})
-        
-        if(existingScreening){
-            throw new ResourceConflictError("Screening already exist")
+    ):Promise<Screening | null>{
+        const overlappingScreening = await this.screeningRepository.findOne({
+            where: {
+                movie: { id: movieId },
+                startsAt: LessThan(new Date(endsAt)),
+                endsAt: MoreThan(new Date(startsAt))
+            },
+            relations: ["movie", "room"]
+        })
+
+        if (overlappingScreening) {
+            throw new ResourceConflictError("Screening overlaps with another screening of the same movie")
         }
 
+
+        const movie = await this.movieUseCase.getMovie(movieId)
+        const room = await this.roomUseCase.getRoom(roomId)
+
+        if(movie === null) return null
+        if(room === null) return null
+
         const screening = this.screeningRepository.create({
-            movieId,
-            roomId,
-            startsAt,
-            endsAt
+            movie,
+            room,
+            startsAt: new Date(startsAt),
+            endsAt: new Date(endsAt)
         })
 
         return await this.screeningRepository.save(screening)

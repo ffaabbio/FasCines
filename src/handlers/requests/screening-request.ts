@@ -1,8 +1,8 @@
 export interface CreateScreeningRequest {
     movieId: string,
     roomId: string,
-    startsAt: string, 
-    endsAt: string
+    startsAt: Date, 
+    endsAt: Date
 }
 
 export interface UpdateScreeningRequest {
