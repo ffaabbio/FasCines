@@ -435,7 +435,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NDcyODkyLCJleHAiOjE3Nzc0NzMxOTJ9.Hi1lgWZ54y3fkKHLcQYHLLRkOVadg0Z1Pg7mx_nX420",
+                  "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTAyODQ4LCJleHAiOjE3Nzc1MDMxNDh9.C11FBqH5IiraQHsNzrHmtFXvI5lurKpB7h7olLpHbIs",
                   "type": "string"
                 }
               ]
@@ -475,7 +475,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NDcyMjI5LCJleHAiOjE3Nzc0NzI1Mjl9.doQ0bbwcAV399Qu-0Hm18jHGsLkm1mjYHH-7MKxjTx0",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YjAzMzFhNy1lMjI0LTQ3MDgtOTUzNi1jOGFhMTVjOTIzM2MiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTA2NTQ4LCJleHAiOjE3Nzc1MDY4NDh9.bY4mUyfaYAk8aneQC8zm4VhwtF8rNm-3viX7Ihqeoec",
                   "type": "string"
                 }
               ]
@@ -489,7 +489,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": ""
+              "raw": "{\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/rooms/fbb8389f-46d7-4356-a5e8-84a64254e25cqdqd",
@@ -621,16 +621,69 @@
         {
           "name": "Get one movie",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/movies/7b8451c7-7ec8-461d-9253-64312a0d0382",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies",
+                "7b8451c7-7ec8-461d-9253-64312a0d0382"
+              ]
+            }
           },
           "response": []
         },
         {
           "name": "Get list movies",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
-            "header": []
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"page\": 4,\r\n  \"size\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/movies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies"
+              ]
+            }
           },
           "response": []
         },
@@ -642,7 +695,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTAzMzMwLCJleHAiOjE3Nzc1MDM2MzB9.XaZ3nefRAA7CBbM8JNChAaIH-D8OasnaT_1ljhPMUP0",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
                   "type": "string"
                 }
               ]
@@ -651,7 +704,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"description\" : \"un film qui a été update\",\r\n    \"releaseYear\": 2026\r\n}",
+              "raw": "{\r\n    \"description\" : \"un film qui a été update 1\",\r\n    \"releaseYear\": 2026\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -675,8 +728,29 @@
         {
           "name": "Delete Movie",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "DELETE",
-            "header": []
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/movies/cdbbd208-6f1f-4706-a3a2-5d85d1b11b06",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies",
+                "cdbbd208-6f1f-4706-a3a2-5d85d1b11b06"
+              ]
+            }
           },
           "response": []
         },
@@ -688,7 +762,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTAzMzMwLCJleHAiOjE3Nzc1MDM2MzB9.XaZ3nefRAA7CBbM8JNChAaIH-D8OasnaT_1ljhPMUP0",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
                   "type": "string"
                 }
               ]
@@ -697,7 +771,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"title\": \"delete\",\r\n  \"description\": \"Film qui va être delete\",\r\n  \"durationMin\": 178,\r\n  \"director\": \"Delete\",\r\n  \"genre\": \"Test\",\r\n  \"releaseYear\": 2001\r\n}\r\n",
+              "raw": "{\r\n  \"title\": \"delete 1\",\r\n  \"description\": \"Film qui va être delete 1\",\r\n  \"durationMin\": 178,\r\n  \"director\": \"Delete\",\r\n  \"genre\": \"Test\",\r\n  \"releaseYear\": 2026\r\n}\r\n",
               "options": {
                 "raw": {
                   "language": "json"
@@ -712,6 +786,123 @@
               "path": [
                 "api",
                 "movies"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Screening",
+      "item": [
+        {
+          "name": "Add screening",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NzcyNzYxLCJleHAiOjE3Nzc3NzMwNjF9.DGC8j8wv5GnH_7Uc1zKPWgqOB2d_AFguF0esnamAos0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"movieId\": \"c15cacf8-b226-4336-99ed-447c2bd408b3\",\r\n  \"roomId\": \"19a4b57a-17b9-483e-9703-acfbad0356b9\",\r\n  \"startsAt\": \"2026-05-06T12:00:00.000Z\",\r\n  \"endsAt\": \"2026-05-06T14:55:00.000Z\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get  one screening",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get list screening",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete screening",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch screening",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings",
+                ""
               ]
             }
           },
