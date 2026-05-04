@@ -1,17 +1,10 @@
 import Joi from "joi"
 
-export interface ValidationError {
-    [key: string]: string
-}
-
-export const generateValidationErrorMessage = (
-    errorDetails: Joi.ValidationErrorItem[]
-): ValidationError => {
-    const formattedErrors: ValidationError = {}
+export const generateValidationErrorMessage = (errorDetails: Joi.ValidationErrorItem[]): Record<string, string> => {
+    const errors: Record<string, string> = {}
     errorDetails.forEach((detail) => {
         const key = detail.path.join(".")
-
-        formattedErrors[key] = detail.message
+        errors[key] = detail.message
     })
-    return formattedErrors
+    return errors
 }
