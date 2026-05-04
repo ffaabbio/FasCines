@@ -37,7 +37,7 @@ export const CreateScreening = async (req: Request, res: Response) => {
     } catch(error: unknown){
         if(error instanceof ResourceConflictError){
             return res.status(409).send({
-                error: "error"
+                error: "Invalid screening duration: the provided time range is shorter than the required movie duration plus 30 minutes."
             })
         }
 
