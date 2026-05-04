@@ -29,7 +29,7 @@ export class AuthUsecase {
         return await this.userRepository.save(user)
     }
 
-     async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {
+    async login(email: string, password: string): Promise<{ accessToken: string, refreshToken: string }> {
         const user = await this.userRepository.findOneBy({ email })
         if (!user) {
             throw new InvalidCredentialsError("Invalid email or password")
