@@ -73,9 +73,9 @@ src/
 
 ## Ce qui reste à faire
 
-- [ ] CRUD Rooms (feat/rooms — collègue 1)
-- [ ] CRUD Movies (feat/rooms — collègue 1)
-- [ ] CRUD Screenings avec règles métier : horaires, chevauchements (feat/rooms — collègue 1)
+- [x] CRUD Rooms (feat/rooms — collègue 1)
+- [x] CRUD Movies (feat/rooms — collègue 1)
+- [x] CRUD Screenings avec règles métier : horaires, chevauchements (feat/rooms — collègue 1)
 - [ ] Entités + CRUD Tickets Regular + Super (feat/tickets — collègue 2)
 - [ ] Entités + CRUD Wallet + Transactions (feat/tickets — collègue 2)
 - [ ] Statistiques admin : fréquentation, occupation, revenus
