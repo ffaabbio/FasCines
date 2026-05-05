@@ -27,6 +27,10 @@ export class User {
     @Column("enum", { enum: UserRole, default: UserRole.CLIENT })
     role: UserRole
 
+    @Column("decimal", { precision: 10, scale: 2, default: 0 })
+    balance: number
+
+
     @CreateDateColumn()
     createdAt: Date
 
@@ -46,6 +50,7 @@ export class User {
         firstName: string,
         lastName: string,
         role: UserRole,
+        balance: number,
         createdAt: Date,
         updatedAt: Date,
         deletedAt: Date
@@ -56,6 +61,7 @@ export class User {
         this.firstName = firstName
         this.lastName = lastName
         this.role = role
+        this.balance = balance
         this.createdAt = createdAt
         this.updatedAt = updatedAt
         this.deletedAt = deletedAt
