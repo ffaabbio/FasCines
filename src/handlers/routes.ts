@@ -6,6 +6,7 @@ import { UserRole } from "../database/entities/user.js"
 import { ListRooms,GetRoom, CreateRoom, UpdateRoom, DeleteRoom } from "./room-handler.js"
 import { CreateMovie, DeleteMovie, GetMovie, ListMovies, UpdateMovie } from "./movie-handler.js"
 import { CreateScreening, DeleteScreening, GetScreening, ListScreening, UpdateScreening } from "./screening-handler.js"
+import { AddBalance, BuyTicket, GetTransactions, ListTickets, UseTicket } from "./ticket-handler.js"
 
 export const initHandlers = (app: Express) => {
     // Auth — routes publiques
@@ -55,5 +56,14 @@ export const initHandlers = (app: Express) => {
     app.patch("/api/screenings/:id",authMiddleware,requireRole(UserRole.ADMIN,UserRole.SUPER_ADMIN),UpdateScreening)
     app.delete("/api/screenings/:id",authMiddleware,requireRole(UserRole.ADMIN,UserRole.SUPER_ADMIN),DeleteScreening)
 
-    
+    // Tickets
+    app.post("/api/tickets/buy", authMiddleware, BuyTicket)
+    app.post("/api/tickets/:id/use", authMiddleware, UseTicket)
+    app.get("/api/tickets", authMiddleware, ListTickets)
+
+    // Balance
+    app.post("/api/balance", authMiddleware, AddBalance)
+
+    // Transactions
+    app.get("/api/transactions", authMiddleware, GetTransactions)
 }
