@@ -61,6 +61,7 @@ export class AuthUsecase {
         return { accessToken, refreshToken }
     }
 
+
     async refresh(refreshToken: string): Promise<{ accessToken: string }> {
         const tokenEntity = await this.tokenRepository.findOne({
             where: { token: refreshToken },

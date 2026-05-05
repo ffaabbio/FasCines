@@ -1,214 +1,928 @@
 {
-    "info": {
-        "name": "FasCine API",
-        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  "info": {
+    "_postman_id": "80fcf6f2-2b25-4c02-a91a-d43e78c0b72c",
+    "name": "FasCine API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45520065",
+    "_collection_link": "https://go.postman.co/collection/45520065-80fcf6f2-2b25-4c02-a91a-d43e78c0b72c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"testadmin@testadmin.com\",\n    \"password\": \"12345678\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.collectionVariables.set('accessToken', res.accessToken);",
+                  "pm.collectionVariables.set('refreshToken', res.refreshToken);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"testadmin@testadmin.com\",\n    \"password\": \"12345678\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "pm.collectionVariables.set('accessToken', res.accessToken);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"token\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"token\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout all",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout-all",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout-all"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     },
-    "variable": [
+    {
+      "name": "Users",
+      "item": [
         {
-            "key": "baseUrl",
-            "value": "http://localhost:3000"
+          "name": "Get my profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
         },
         {
-            "key": "accessToken",
-            "value": ""
+          "name": "Update my profile",
+          "request": {
+            "auth": {
+              "type": "jwt",
+              "jwt": [
+                {
+                  "key": "algorithm",
+                  "value": "HS256",
+                  "type": "string"
+                },
+                {
+                  "key": "isSecretBase64Encoded",
+                  "value": false,
+                  "type": "boolean"
+                },
+                {
+                  "key": "payload",
+                  "value": "{}",
+                  "type": "string"
+                },
+                {
+                  "key": "addTokenTo",
+                  "value": "header",
+                  "type": "string"
+                },
+                {
+                  "key": "headerPrefix",
+                  "value": "Bearer",
+                  "type": "string"
+                },
+                {
+                  "key": "queryParamKey",
+                  "value": "token",
+                  "type": "string"
+                },
+                {
+                  "key": "header",
+                  "value": "{}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"Jane\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
         },
         {
-            "key": "refreshToken",
-            "value": ""
+          "name": "List all users (admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get user by id (admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "REMPLACE_PAR_UN_UUID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update user role (super admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id/role",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id",
+                "role"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "REMPLACE_PAR_UN_UUID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete user (admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "REMPLACE_PAR_UN_UUID"
+                }
+              ]
+            }
+          },
+          "response": []
         }
-    ],
-    "item": [
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
         {
-            "name": "Auth",
-            "item": [
-                {
-                    "name": "Register",
-                    "request": {
-                        "method": "POST",
-                        "url": "{{baseUrl}}/api/auth/register",
-                        "header": [{ "key": "Content-Type", "value": "application/json" }],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"12345678\",\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Login",
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "const res = pm.response.json();",
-                                    "pm.collectionVariables.set('accessToken', res.accessToken);",
-                                    "pm.collectionVariables.set('refreshToken', res.refreshToken);"
-                                ]
-                            }
-                        }
-                    ],
-                    "request": {
-                        "method": "POST",
-                        "url": "{{baseUrl}}/api/auth/login",
-                        "header": [{ "key": "Content-Type", "value": "application/json" }],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"12345678\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Refresh token",
-                    "event": [
-                        {
-                            "listen": "test",
-                            "script": {
-                                "exec": [
-                                    "const res = pm.response.json();",
-                                    "pm.collectionVariables.set('accessToken', res.accessToken);"
-                                ]
-                            }
-                        }
-                    ],
-                    "request": {
-                        "method": "POST",
-                        "url": "{{baseUrl}}/api/auth/refresh",
-                        "header": [{ "key": "Content-Type", "value": "application/json" }],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"token\": \"{{refreshToken}}\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Logout",
-                    "request": {
-                        "method": "POST",
-                        "url": "{{baseUrl}}/api/auth/logout",
-                        "header": [
-                            { "key": "Content-Type", "value": "application/json" },
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"token\": \"{{refreshToken}}\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Logout all",
-                    "request": {
-                        "method": "POST",
-                        "url": "{{baseUrl}}/api/auth/logout-all",
-                        "header": [
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Users",
-            "item": [
-                {
-                    "name": "Get my profile",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/api/users/me",
-                        "header": [
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ]
-                    }
-                },
-                {
-                    "name": "Update my profile",
-                    "request": {
-                        "method": "PATCH",
-                        "url": "{{baseUrl}}/api/users/me",
-                        "header": [
-                            { "key": "Content-Type", "value": "application/json" },
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"firstName\": \"Jane\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "List all users (admin)",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/api/users",
-                        "header": [
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ]
-                    }
-                },
-                {
-                    "name": "Get user by id (admin)",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/api/users/:id",
-                        "header": [
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/api/users/:id",
-                            "host": ["{{baseUrl}}"],
-                            "path": ["api", "users", ":id"],
-                            "variable": [{ "key": "id", "value": "REMPLACE_PAR_UN_UUID" }]
-                        }
-                    }
-                },
-                {
-                    "name": "Update user role (super admin)",
-                    "request": {
-                        "method": "PATCH",
-                        "url": {
-                            "raw": "{{baseUrl}}/api/users/:id/role",
-                            "host": ["{{baseUrl}}"],
-                            "path": ["api", "users", ":id", "role"],
-                            "variable": [{ "key": "id", "value": "REMPLACE_PAR_UN_UUID" }]
-                        },
-                        "header": [
-                            { "key": "Content-Type", "value": "application/json" },
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ],
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n    \"role\": \"admin\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Delete user (admin)",
-                    "request": {
-                        "method": "DELETE",
-                        "url": {
-                            "raw": "{{baseUrl}}/api/users/:id",
-                            "host": ["{{baseUrl}}"],
-                            "path": ["api", "users", ":id"],
-                            "variable": [{ "key": "id", "value": "REMPLACE_PAR_UN_UUID" }]
-                        },
-                        "header": [
-                            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
-                        ]
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Health",
-            "item": [
-                {
-                    "name": "Health check",
-                    "request": {
-                        "method": "GET",
-                        "url": "{{baseUrl}}/health"
-                    }
-                }
-            ]
+          "name": "Health check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          },
+          "response": []
         }
-    ]
+      ]
+    },
+    {
+      "name": "Room",
+      "item": [
+        {
+          "name": "Add room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTAyODQ4LCJleHAiOjE3Nzc1MDMxNDh9.C11FBqH5IiraQHsNzrHmtFXvI5lurKpB7h7olLpHbIs",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Salle 12\",\n  \"description\": \"Salle pour être update\",\n  \"capacity\": 30,\n  \"isHandicapReady\": true,\n  \"isUnderMaintenance\": false\n}\n"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rooms"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get one book",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5YjAzMzFhNy1lMjI0LTQ3MDgtOTUzNi1jOGFhMTVjOTIzM2MiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTA2NTQ4LCJleHAiOjE3Nzc1MDY4NDh9.bY4mUyfaYAk8aneQC8zm4VhwtF8rNm-3viX7Ihqeoec",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"page\": 1,\r\n    \"size\": 10\r\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/fbb8389f-46d7-4356-a5e8-84a64254e25cqdqd",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                "fbb8389f-46d7-4356-a5e8-84a64254e25cqdqd"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get list books",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NDcyMDE4LCJleHAiOjE3Nzc0NzIzMTh9.3O1-RsTuP8t0p-NLRrwdkcPY8n2SQL_3GOd0REJfLxc",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"page\": 1,\r\n  \"size\": 10\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NDc2NjA2LCJleHAiOjE3Nzc0NzY5MDZ9.rpN4irX2IX3Br6WEHyLUOn5jem3K7t4KZsEANEZnwS0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"description\": \"mise à jour de la description\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/6d8d0094-91eb-4909-8d35-8a19c20d9a5d",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                "6d8d0094-91eb-4909-8d35-8a19c20d9a5d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NDcyODkyLCJleHAiOjE3Nzc0NzMxOTJ9.Hi1lgWZ54y3fkKHLcQYHLLRkOVadg0Z1Pg7mx_nX420",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/rooms/ccec5bd2-2376-4f8e-a87a-5d7af1b6012c",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "rooms",
+                "ccec5bd2-2376-4f8e-a87a-5d7af1b6012c"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Movie",
+      "item": [
+        {
+          "name": "Get one movie",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/movies/7b8451c7-7ec8-461d-9253-64312a0d0382",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies",
+                "7b8451c7-7ec8-461d-9253-64312a0d0382"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get list movies",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"page\": 4,\r\n  \"size\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/movies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update movie",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"description\" : \"un film qui a été update 1\",\r\n    \"releaseYear\": 2026\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/movies/8305da71-feb1-4978-bbef-8a0d87224300",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies",
+                "8305da71-feb1-4978-bbef-8a0d87224300"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Movie",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/movies/cdbbd208-6f1f-4706-a3a2-5d85d1b11b06",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies",
+                "cdbbd208-6f1f-4706-a3a2-5d85d1b11b06"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add movie",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NTkwMjI3LCJleHAiOjE3Nzc1OTA1Mjd9.uZekBAHfZlqghGnz42CzW7MtRqA0i2HKuxebaGSEAh8",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"delete 1\",\r\n  \"description\": \"Film qui va être delete 1\",\r\n  \"durationMin\": 178,\r\n  \"director\": \"Delete\",\r\n  \"genre\": \"Test\",\r\n  \"releaseYear\": 2026\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/movies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "movies"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Screening",
+      "item": [
+        {
+          "name": "Add screening",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NzcyNzYxLCJleHAiOjE3Nzc3NzMwNjF9.DGC8j8wv5GnH_7Uc1zKPWgqOB2d_AFguF0esnamAos0",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"movieId\": \"c15cacf8-b226-4336-99ed-447c2bd408b3\",\r\n  \"roomId\": \"19a4b57a-17b9-483e-9703-acfbad0356b9\",\r\n  \"startsAt\": \"2026-05-06T12:00:00.000Z\",\r\n  \"endsAt\": \"2026-05-06T14:55:00.000Z\"\r\n}\r\n\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get  one screening",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get list screening",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete screening",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch screening",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/screenings/",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "screenings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
+    }
+  ]
 }
