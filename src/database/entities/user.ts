@@ -7,6 +7,42 @@ export enum UserRole {
     SUPER_ADMIN = "super_admin"
 }
 
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         email:
+ *           type: string
+ *           format: email
+ *         firstName:
+ *           type: string
+ *         lastName:
+ *           type: string
+ *         role:
+ *           type: string
+ *           enum: [client, admin, super_admin]
+ *         balance:
+ *           type: number
+ *           format: float
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ */
+
 @Entity()
 export class User {
     @PrimaryGeneratedColumn("uuid")

@@ -1,6 +1,44 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import type { Screening } from "./screening.js"
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Movie:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         title:
+ *           type: string
+ *         description:
+ *           type: string
+ *           nullable: true
+ *         durationMin:
+ *           type: integer
+ *         director:
+ *           type: string
+ *           nullable: true
+ *         genre:
+ *           type: string
+ *           nullable: true
+ *         releaseYear:
+ *           type: integer
+ *           nullable: true
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ */
+
 @Entity()
 export class Movie {
     @PrimaryGeneratedColumn("uuid")

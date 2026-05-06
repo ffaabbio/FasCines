@@ -2,6 +2,38 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryG
 import type { Movie } from "./movie.js"
 import type { Room } from "./room.js"
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Screening:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         movie:
+ *           $ref: '#/components/schemas/Movie'
+ *         room:
+ *           $ref: '#/components/schemas/Room'
+ *         startsAt:
+ *           type: string
+ *           format: date-time
+ *         endsAt:
+ *           type: string
+ *           format: date-time
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ */
+
 @Entity()
 export class Screening {
     @PrimaryGeneratedColumn("uuid")

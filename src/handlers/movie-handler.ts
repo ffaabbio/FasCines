@@ -7,6 +7,42 @@ import { ResourceConflictError } from "../usecases/error.js";
 import { Movie } from "../database/entities/movie.js";
 
 
+/**
+ * @swagger
+ * /movies:
+ *   post:
+ *     summary: Create a new movie
+ *     tags: [Movies]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               durationMin:
+ *                 type: integer
+ *               director:
+ *                 type: string
+ *               genre:
+ *                 type: string
+ *               releaseYear:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Movie created successfully
+ *       400:
+ *         description: Validation error
+ *       409:
+ *         description: Movie title already exists
+ */
+
 export const CreateMovie = async (req: Request, res: Response) => {
     const validation = CreateMovieValidator.validate(req.body)
         
@@ -34,6 +70,33 @@ export const CreateMovie = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @swagger
+ * /movies/{id}:
+ *   get:
+ *     summary: Get a movie by ID
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Movie found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Movie'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Movie not found
+ */
+
+
 export const GetMovie = async (req: Request, res: Response) => {
     const validation = MovieIdValidator.validate(req.params)
         
@@ -56,8 +119,51 @@ export const GetMovie = async (req: Request, res: Response) => {
     return res.status(200).json(movie)
 }
 
+/**
+ * @swagger
+ * /movies:
+ *   get:
+ *     summary: List movies with pagination
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: size
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *     responses:
+ *       200:
+ *         description: Paginated list of movies
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Movie'
+ *                 page:
+ *                   type: integer
+ *                 pageSize:
+ *                   type: integer
+ *                 totalCount:
+ *                   type: integer
+ *                 totalPages:
+ *                   type: integer
+ *       400:
+ *         description: Validation error
+ */
+
 export const ListMovies = async (req: Request, res: Response) => {
-    const validation = ListMovieValidator.validate(req.body)
+    const validation = ListMovieValidator.validate(req.query)
 
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
@@ -85,6 +191,49 @@ export const ListMovies = async (req: Request, res: Response) => {
 
 
 }
+
+/**
+ * @swagger
+ * /movies/{id}:
+ *   patch:
+ *     summary: Update an existing movie
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               durationMin:
+ *                 type: integer
+ *               director:
+ *                 type: string
+ *               genre:
+ *                 type: string
+ *               releaseYear:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Movie updated successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Movie not found
+ *       409:
+ *         description: Movie title already exists
+ */
 
 export const UpdateMovie = async (req: Request, res: Response) => {
     const validationId = MovieIdValidator.validate(req.params)
@@ -131,6 +280,28 @@ export const UpdateMovie = async (req: Request, res: Response) => {
         throw error
     }
 } 
+
+/**
+ * @swagger
+ * /movies/{id}:
+ *   delete:
+ *     summary: Delete a movie
+ *     tags: [Movies]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Movie deleted successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Movie not found
+ */
 
 export const DeleteMovie = async (req: Request, res: Response) => {
     const validation = MovieIdValidator.validate(req.params)

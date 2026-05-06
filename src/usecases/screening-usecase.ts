@@ -1,6 +1,5 @@
-import {Repository,LessThan,MoreThan} from "typeorm"
+import {Repository,LessThan,MoreThan,Not} from "typeorm"
 import { Screening } from "../database/entities/screening.js";
-import { Movie } from "../database/entities/movie.js";
 import { NotFoundError, ResourceConflictError } from "./error.js"
 import { RoomUseCase } from "./room-usecase.js";
 import { MovieUseCase } from "./movie-usecase.js";
