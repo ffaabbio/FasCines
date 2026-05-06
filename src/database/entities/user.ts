@@ -1,5 +1,7 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import type { Token } from "./token.js"
+import type { Ticket } from "./ticket.js"
+import type { Transaction } from "./transaction.js"
 
 export enum UserRole {
     CLIENT = "client",
@@ -78,6 +80,12 @@ export class User {
 
     @OneToMany("Token", (token: Token) => token.user)
     tokens!: Token[]
+
+    @OneToMany("Ticket", (ticket: Ticket) => ticket.user)
+    tickets!: Ticket[]
+
+    @OneToMany("Transaction", (transaction: Transaction) => transaction.user)
+    transactions!: Transaction[]
 
     constructor(
         id: string,
