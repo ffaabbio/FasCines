@@ -804,7 +804,7 @@
               "bearer": [
                 {
                   "key": "token",
-                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiODZiNjc5Yy04NmE2LTRlOGEtOTkyYy1iODMwMjc5ZWM1OGMiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3NzcyNzYxLCJleHAiOjE3Nzc3NzMwNjF9.DGC8j8wv5GnH_7Uc1zKPWgqOB2d_AFguF0esnamAos0",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxM2NlYzYwMy1hM2IyLTQ4NzYtOGU1MC01NzI0MDUzODY1NzQiLCJlbWFpbCI6InRlc3RhZG1pbkB0ZXN0YWRtaW4uY29tIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc3ODYxMjgyLCJleHAiOjE3Nzc4NjE1ODJ9.T-_7aeqparqH0ShRvCupGsLRLsbucx5EnqOuXT3KAHU",
                   "type": "string"
                 }
               ]
@@ -813,7 +813,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"movieId\": \"c15cacf8-b226-4336-99ed-447c2bd408b3\",\r\n  \"roomId\": \"19a4b57a-17b9-483e-9703-acfbad0356b9\",\r\n  \"startsAt\": \"2026-05-06T12:00:00.000Z\",\r\n  \"endsAt\": \"2026-05-06T14:55:00.000Z\"\r\n}\r\n\r\n",
+              "raw": "{\r\n  \"movieId\": \"a346b191-8571-4ecf-8334-a8467804b1d6\",\r\n  \"roomId\": \"160a00ab-07d9-41f0-9dea-6bfefbd27434\",\r\n  \"startsAt\": \"2026-05-06T12:00:00.000Z\",\r\n  \"endsAt\": \"2026-05-06T14:55:00.000Z\"\r\n}\r\n\r\n",
               "options": {
                 "raw": {
                   "language": "json"
