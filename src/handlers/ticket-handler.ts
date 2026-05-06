@@ -14,6 +14,43 @@ const buildUsecase = () => new TicketUsecase(
     AppDataSource.getRepository(User)
 )
 
+/**
+ * @swagger
+ * /tickets/balance:
+ *   post:
+ *     summary: Add balance to the authenticated user's account
+ *     tags: [Tickets]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - amount
+ *             properties:
+ *               amount:
+ *                 type: number
+ *     responses:
+ *       200:
+ *         description: Balance updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 balance:
+ *                   type: number
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+
 export const AddBalance = async (req: Request, res: Response) => {
     const validation = AddBalanceValidator.validate(req.body)
     if (validation.error) {
@@ -29,6 +66,38 @@ export const AddBalance = async (req: Request, res: Response) => {
         return res.status(500).send({ error: "Erreur serveur" })
     }
 }
+
+
+/**
+ * @swagger
+ * /tickets:
+ *   post:
+ *     summary: Buy a ticket
+ *     tags: [Tickets]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - type
+ *             properties:
+ *               type:
+ *                 type: string
+ *                 enum: [STANDARD, PREMIUM, ILLIMITE]
+ *     responses:
+ *       201:
+ *         description: Ticket purchased successfully
+ *       400:
+ *         description: Validation error or insufficient balance
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 
 export const BuyTicket = async (req: Request, res: Response) => {
     const validation = BuyTicketValidator.validate(req.body)
@@ -46,6 +115,47 @@ export const BuyTicket = async (req: Request, res: Response) => {
         return res.status(500).send({ error: "Erreur serveur" })
     }
 }
+
+
+/**
+ * @swagger
+ * /tickets/{id}/use:
+ *   post:
+ *     summary: Use a ticket for a screening
+ *     tags: [Tickets]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - seanceId
+ *             properties:
+ *               seanceId:
+ *                 type: string
+ *                 format: uuid
+ *     responses:
+ *       200:
+ *         description: Ticket used successfully
+ *       400:
+ *         description: Validation error or no remaining uses
+ *       403:
+ *         description: Ticket does not belong to the user
+ *       404:
+ *         description: Ticket or screening not found
+ *       500:
+ *         description: Internal server error
+ */
 
 export const UseTicket = async (req: Request, res: Response) => {
     const idValidation = TicketIdValidator.validate(req.params)
@@ -69,11 +179,53 @@ export const UseTicket = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @swagger
+ * /tickets:
+ *   get:
+ *     summary: List all tickets of the authenticated user
+ *     tags: [Tickets]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of tickets
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Ticket'
+ *       500:
+ *         description: Internal server error
+ */
+
 export const ListTickets = async (req: Request, res: Response) => {
     const userId = (req as any).user.userId
     const tickets = await buildUsecase().listTickets(userId)
     return res.send(tickets)
 }
+
+/**
+ * @swagger
+ * /tickets/transactions:
+ *   get:
+ *     summary: Get all transactions of the authenticated user
+ *     tags: [Tickets]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of transactions
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Transaction'
+ *       500:
+ *         description: Internal server error
+ */
 
 export const GetTransactions = async (req: Request, res: Response) => {
     const userId = (req as any).user.userId

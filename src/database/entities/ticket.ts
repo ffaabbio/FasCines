@@ -7,6 +7,41 @@ export enum TicketType {
     SUPER = "super"
 }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Ticket:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         type:
+ *           type: string
+ *           enum: [regular, super]
+ *         remainingUses:
+ *           type: integer
+ *         price:
+ *           type: number
+ *           format: float
+ *         user:
+ *           $ref: '#/components/schemas/User'
+ *         transactions:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Transaction'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ */
+
 @Entity()
 export class Ticket {
     @PrimaryGeneratedColumn()

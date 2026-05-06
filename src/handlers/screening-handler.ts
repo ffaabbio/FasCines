@@ -12,6 +12,47 @@ import { Screening } from "../database/entities/screening.js";
 
 
 
+/**
+ * @swagger
+ * /screenings:
+ *   post:
+ *     summary: Create a new screening
+ *     tags: [Screenings]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - movieId
+ *               - roomId
+ *               - startsAt
+ *               - endsAt
+ *             properties:
+ *               movieId:
+ *                 type: string
+ *                 format: uuid
+ *               roomId:
+ *                 type: string
+ *                 format: uuid
+ *               startsAt:
+ *                 type: string
+ *                 format: date-time
+ *               endsAt:
+ *                 type: string
+ *                 format: date-time
+ *     responses:
+ *       201:
+ *         description: Screening created successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Movie or Room not found
+ *       409:
+ *         description: Screening duration too short or overlapping
+ */
+
 export const CreateScreening = async (req: Request, res: Response) => {
     const validation = CreateScreeningValidator.validate(req.body)
 
@@ -47,6 +88,33 @@ export const CreateScreening = async (req: Request, res: Response) => {
     }
 }
 
+
+/**
+ * @swagger
+ * /screenings/{id}:
+ *   get:
+ *     summary: Get a screening by ID
+ *     tags: [Screenings]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Screening found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Screening'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Screening not found
+ */
+
 export const GetScreening = async (req: Request, res: Response) => {
     const validation = ScreeningIdValidator.validate(req.params)
 
@@ -70,6 +138,49 @@ export const GetScreening = async (req: Request, res: Response) => {
 
     return res.status(200).json(screening)
 }
+
+/**
+ * @swagger
+ * /screenings:
+ *   get:
+ *     summary: Get a paginated list of screenings
+ *     tags: [Screenings]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: size
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *     responses:
+ *       200:
+ *         description: List of screenings
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Screening'
+ *                 page:
+ *                   type: integer
+ *                 pageSize:
+ *                   type: integer
+ *                 totalCount:
+ *                   type: integer
+ *                 totalPages:
+ *                   type: integer
+ *       400:
+ *         description: Validation error
+ */
 
 export const ListScreening = async (req: Request, res: Response) => {
     const validation = ListScreeningValidator.validate(req.body)
@@ -101,6 +212,30 @@ export const ListScreening = async (req: Request, res: Response) => {
     return res.send(screening)
 }
 
+/**
+ * @swagger
+ * /screening/{id}:
+ *   delete:
+ *      summary: Delete an existing screening
+ *      tags: [Screenings]
+ *      parameters:
+ *          - in: path
+ *            name: id
+ *            required: true
+ *            schema:
+ *              type: string
+ *              format: uuid
+ *      responses:
+ *       200:
+ *         description: Screening deleted successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Screening not found
+ *       409:
+ *         description: Invalid duration or overlapping screening
+ */
+
 export const DeleteScreening = async (req: Request, res: Response) => {
     const validation = ScreeningIdValidator.validate(req.params)
 
@@ -122,8 +257,51 @@ export const DeleteScreening = async (req: Request, res: Response) => {
         })
     }
 
-    return res.send(screeningDelete)
+    return res.status(204).send()
 }
+
+/**
+ * @swagger
+ * /screenings/{id}:
+ *   patch:
+ *     summary: Update an existing screening
+ *     tags: [Screenings]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               movieId:
+ *                 type: string
+ *                 format: uuid
+ *               roomId:
+ *                 type: string
+ *                 format: uuid
+ *               startsAt:
+ *                 type: string
+ *                 format: date-time
+ *               endsAt:
+ *                 type: string
+ *                 format: date-time
+ *     responses:
+ *       200:
+ *         description: Screening updated successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: Screening not found
+ *       409:
+ *         description: Invalid duration or overlapping screening
+ */
 
 export const UpdateScreening = async (req: Request, res: Response) => {
     const validationId = ScreeningIdValidator.validate(req.params)

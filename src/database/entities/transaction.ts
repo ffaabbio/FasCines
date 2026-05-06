@@ -8,6 +8,42 @@ export enum TransactionType {
     USAGE = "usage"         // utilisation d'un ticket à une séance
 }
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Transaction:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *         type:
+ *           type: string
+ *           enum: [credit, purchase, usage]
+ *         amount:
+ *           type: number
+ *           format: float
+ *           nullable: true
+ *         screeningId:
+ *           type: integer
+ *           nullable: true
+ *         user:
+ *           $ref: '#/components/schemas/User'
+ *         ticket:
+ *           $ref: '#/components/schemas/Ticket'
+ *           nullable: true
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ */
+
 @Entity()
 export class Transaction {
     @PrimaryGeneratedColumn()

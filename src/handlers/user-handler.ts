@@ -17,6 +17,28 @@ const sanitizeUser = (user: User) => ({
     createdAt: user.createdAt
 })
 
+
+/**
+ * @swagger
+ * /users/me:
+ *   get:
+ *     summary: Get the authenticated user's profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User profile retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+
 export const GetMe = async (req: Request, res: Response) => {
     try {
         const user = await getUserUsecase().getMe(req.user!.userId)
@@ -29,6 +51,45 @@ export const GetMe = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" })
     }
 }
+
+/**
+ * @swagger
+ * /users/me:
+ *   patch:
+ *     summary: Update the authenticated user's profile
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: User not found
+ *       409:
+ *         description: Email already in use
+ *       500:
+ *         description: Internal server error
+ */
 
 export const UpdateMe = async (req: Request, res: Response) => {
     const validation = UpdateUserValidator.validate(req.body, { abortEarly: false })
@@ -55,6 +116,27 @@ export const UpdateMe = async (req: Request, res: Response) => {
     }
 }
 
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Internal server error
+ */
+
 export const ListUsers = async (_req: Request, res: Response) => {
     try {
         const users = await getUserUsecase().listUsers()
@@ -63,6 +145,36 @@ export const ListUsers = async (_req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" })
     }
 }
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   get:
+ *     summary: Get a user by ID
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 
 export const GetUserById = async (req: Request, res: Response) => {
     const validation = UserIdValidator.validate(req.params)
@@ -82,6 +194,48 @@ export const GetUserById = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" })
     }
 }
+
+/**
+ * @swagger
+ * /users/{id}/role:
+ *   patch:
+ *     summary: Update a user's role
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - role
+ *             properties:
+ *               role:
+ *                 type: string
+ *                 enum: [ADMIN, USER]
+ *     responses:
+ *       200:
+ *         description: Role updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 
 export const UpdateRole = async (req: Request, res: Response) => {
     const paramValidation = UserIdValidator.validate(req.params)
@@ -107,6 +261,32 @@ export const UpdateRole = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" })
     }
 }
+
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Delete a user
+ *     tags: [Users]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       204:
+ *         description: User deleted successfully
+ *       400:
+ *         description: Validation error
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
 
 export const DeleteUser = async (req: Request, res: Response) => {
     const validation = UserIdValidator.validate(req.params)
