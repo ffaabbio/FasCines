@@ -163,7 +163,7 @@ export const GetMovie = async (req: Request, res: Response) => {
  */
 
 export const ListMovies = async (req: Request, res: Response) => {
-    const validation = ListMovieValidator.validate(req.body)
+    const validation = ListMovieValidator.validate(req.query)
 
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
