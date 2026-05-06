@@ -1,6 +1,32 @@
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm"
 import type { User } from "./user.js"
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Token:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           format: uuid
+ *         token:
+ *           type: string
+ *         user:
+ *           $ref: '#/components/schemas/User'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         deletedAt:
+ *           type: string
+ *           format: date-time
+ *           nullable: true
+ */
+
 @Entity()
 export class Token {
     @PrimaryGeneratedColumn("uuid")
