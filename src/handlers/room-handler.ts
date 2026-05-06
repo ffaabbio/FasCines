@@ -160,7 +160,7 @@ export const GetRoom = async (req: Request, res:Response) => {
  */
 
 export const ListRooms = async (req: Request, res: Response) => {
-    const validation = ListRoomValidator.validate(req.body)
+    const validation = ListRoomValidator.validate(req.query)
 
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
