@@ -183,7 +183,7 @@ export const GetScreening = async (req: Request, res: Response) => {
  */
 
 export const ListScreening = async (req: Request, res: Response) => {
-    const validation = ListScreeningValidator.validate(req.body)
+    const validation = ListScreeningValidator.validate(req.query)
 
     if(validation.error){
         return res.status(400).send(generateValidationErrorMessage(validation.error.details))
