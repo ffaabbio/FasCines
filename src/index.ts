@@ -27,8 +27,8 @@ const swaggerOptions = {
   },
 
   apis: [
-    "./src/handlers/**/*.ts",
-    "./src/database/entities/**/*.ts"
+    "./src/handlers/**/*.js",
+    "./src/database/entities/**/*.js"
   ]
 }
 const swaggerSpec = swaggerJsdoc(swaggerOptions)

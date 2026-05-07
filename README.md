@@ -52,7 +52,7 @@ API RESTful de gestion d'un cinéma : authentification, utilisateurs, salles, fi
 **1. Cloner le dépôt**
 
 ```bash
-git clone <url-du-repo>
+git clone https://github.com/ffaabbio/FasCines.git
 cd FasCines
 ```
 

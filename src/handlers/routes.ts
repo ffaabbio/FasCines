@@ -1,4 +1,5 @@
 import { Express } from "express"
+import { Bootstrap } from "./bootstrap-handler.js"
 import { Register, Login, Refresh, Logout, LogoutAll } from "./auth-handler.js"
 import { GetMe, UpdateMe, ListUsers, GetUserById, UpdateRole, DeleteUser } from "./user-handler.js"
 import { authMiddleware, requireRole } from "./middlewares/auth-middleware.js"
@@ -66,4 +67,7 @@ export const initHandlers = (app: Express) => {
 
     // Transactions
     app.get("/api/transactions", authMiddleware, GetTransactions)
+
+    // Bootstrap — usage unique pour créer le premier super_admin
+    app.post("/api/bootstrap", Bootstrap)
 }

@@ -9,5 +9,8 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME ?? "fascine_db",
     synchronize: process.env.NODE_ENV !== "production",
     logging: process.env.NODE_ENV === "development",
-    entities: ["src/database/entities/*.ts"],
+    entities: [process.env.NODE_ENV === "production"
+        ? "dist/database/entities/*.js"
+        : "src/database/entities/*.ts"
+    ],
 })
